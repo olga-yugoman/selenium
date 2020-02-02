@@ -26,16 +26,17 @@ public class LoginAsAdmin {
 
     @Before
     public void start() {
-        //driver = new ChromeDriver();
+        driver = new ChromeDriver();
 
         //запуск тестов в Firefox Nightly
-        FirefoxOptions options = new FirefoxOptions();
+        /*FirefoxOptions options = new FirefoxOptions();
         options.setBinary(new FirefoxBinary(new File("c:\\Program Files\\Firefox Nightly\\firefox.exe")));
-        driver = new FirefoxDriver(options);
-        System.out.println(((HasCapabilities) driver).getCapabilities());
+        driver = new FirefoxDriver(options);*/
+
 
         //driver = new FirefoxDriver();
         //driver = new InternetExplorerDriver();
+        System.out.println(((HasCapabilities) driver).getCapabilities());
         wait = new WebDriverWait(driver, 10);
     }
 
