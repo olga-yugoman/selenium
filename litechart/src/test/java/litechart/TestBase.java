@@ -40,12 +40,16 @@ public class TestBase {
         return itemTitles;
     }
 
-    protected List<String> getMenuItemSubitem(String menuTitle) {
+    protected List<String> getMenuItemSubitem() {
         List<WebElement> menuSubItems = wd.findElements(By.cssSelector("ul.docs li"));
         List<String> subitemTitles = new ArrayList<>();
         for (WebElement menuSubItem : menuSubItems) {
             subitemTitles.add(menuSubItem.getText());
         }
         return subitemTitles;
+    }
+
+    protected boolean areElementsPresent(WebDriver driver, By locator) {
+        return driver.findElements(locator).size() > 0;
     }
 }
