@@ -3,6 +3,7 @@ package litechart;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -31,13 +32,14 @@ public class TestBase {
         wd.findElement(By.name("login")).click();
     }
 
-    protected List<String> getLeftMenuMainItems() {
+    protected int getLeftMenuSize() {
         List<WebElement> menuItems = wd.findElements(By.id("app-"));
-        List<String> itemTitles = new ArrayList<>();
-        for (WebElement menuItem : menuItems) {
-            itemTitles.add(menuItem.getText());
-        }
-        return itemTitles;
+        return menuItems.size();
+    }
+
+    protected int getSubMenuSize() {
+        List<WebElement> menuSubItems = wd.findElements(By.cssSelector("ul.docs li"));
+        return menuSubItems.size();
     }
 
     protected List<String> getMenuItemSubitem() {
@@ -47,6 +49,15 @@ public class TestBase {
             subitemTitles.add(menuSubItem.getText());
         }
         return subitemTitles;
+    }
+
+    protected boolean isElementPresent(WebDriver driver, By locator) {
+        try {
+            driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
     }
 
     protected boolean areElementsPresent(WebDriver driver, By locator) {
