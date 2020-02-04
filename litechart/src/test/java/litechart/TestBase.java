@@ -25,6 +25,21 @@ public class TestBase {
         app.stop();
     }
 
+    protected boolean isElementPresent(WebDriver driver, By locator) {
+        try {
+            driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
+    }
+
+    protected boolean areElementsPresent(WebDriver driver, By locator) {
+        return driver.findElements(locator).size() > 0;
+    }
+
+    /**********************************ADMIN PANEL METHODS*****************************/
+
     protected void login() {
         wd.get("http://localhost/litecart/admin/login.php");
         wd.findElement(By.name("username")).sendKeys("admin");
@@ -51,16 +66,10 @@ public class TestBase {
         return subitemTitles;
     }
 
-    protected boolean isElementPresent(WebDriver driver, By locator) {
-        try {
-            driver.findElement(locator);
-            return true;
-        } catch (NoSuchElementException ex) {
-            return false;
-        }
-    }
+    /**********************************MAIN PAGE METHODS*****************************/
 
-    protected boolean areElementsPresent(WebDriver driver, By locator) {
-        return driver.findElements(locator).size() > 0;
+    protected List<WebElement> getProducts() {
+        List<WebElement> items = wd.findElements(By.cssSelector("li.product"));
+        return items;
     }
 }
