@@ -8,7 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TestBase {
 
@@ -64,6 +66,42 @@ public class TestBase {
             subitemTitles.add(menuSubItem.getText());
         }
         return subitemTitles;
+    }
+
+    protected Map<String, String> getAllCountriesWithZones() {
+        List<WebElement> rows = wd.findElements(By.cssSelector("tr.row"));
+        Map<String, String> countriesAndZones = new HashMap<>();
+        for (WebElement row : rows) {
+            List<WebElement> cells = row.findElements(By.tagName("td"));
+            String country = cells.get(4).getText();
+            String zonesNumber = cells.get(5).getText();
+            countriesAndZones.put(country, zonesNumber);
+        }
+        return countriesAndZones;
+    }
+
+    protected List<String> getAllCountries() {
+        List<WebElement> rows = wd.findElements(By.cssSelector("tr.row"));
+        List<String> countries = new ArrayList<>();
+        for (WebElement row : rows) {
+            List<WebElement> cells = row.findElements(By.tagName("td"));
+            String country = cells.get(4).getText();
+            countries.add(country);
+        }
+        return countries;
+    }
+
+    protected List<String> getAllZones() {
+        List<WebElement> rows = wd.findElements(By.cssSelector("table#table-zones tr:not(.header)"));
+        List<String> zones = new ArrayList<>();
+        for (WebElement row : rows) {
+            List<WebElement> cells = row.findElements(By.cssSelector("td"));
+            String zoneName = cells.get(2).findElement(By.cssSelector("input")).getAttribute("value");
+            if (!zoneName.equals("")) {
+                zones.add(zoneName);
+            }
+        }
+        return zones;
     }
 
     /**********************************MAIN PAGE METHODS*****************************/
